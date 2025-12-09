@@ -1,6 +1,10 @@
 let validTickets = new Set();
 let usedTickets = new Set();
 
+let lastScannedText = "";
+let lastScanTime = 0;
+
+
 const USED_TICKETS_KEY = "usedTickets";
 
 const resetUsedTicketsButtonEl = document.getElementById("resetUsedTicketsButton");
@@ -148,9 +152,29 @@ function startQrScanner() {
       { facingMode: "environment" },
       config,
       (decodedText, decodedResult) => {
+const now = Date.now();
+
+  // Ignore duplicate scans of the same code within 1 second
+  if (decodedText === lastScannedText && now - lastScanTime < 1000) {
+    return;
+  }
+
+  lastScannedText = decodedText;
+  lastScanTime = now;
+
+  ticketInputEl.value = decodedText;
+  checkTicket(decodedText);
+
+
+
+
+        
         // When a QR code is successfully scanned
-        ticketInputEl.value = decodedText;
-        checkTicket(decodedText);
+        //ticketInputEl.value = decodedText;
+        //checkTicket(decodedText);
+
+
+        
 
         // Option 1: stop after each successful scan
         //stopQrScanner();
