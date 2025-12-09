@@ -3,6 +3,15 @@ let usedTickets = new Set();
 
 const USED_TICKETS_KEY = "usedTickets";
 
+const resetUsedTicketsButtonEl = document.getElementById("resetUsedTicketsButton");
+
+if (resetUsedTicketsButtonEl) {
+  resetUsedTicketsButtonEl.addEventListener("click", () => {
+    resetUsedTickets();
+  });
+}
+
+
 function loadUsedTicketsFromStorage() {
   try {
     const stored = localStorage.getItem(USED_TICKETS_KEY);
