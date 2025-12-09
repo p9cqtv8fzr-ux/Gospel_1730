@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gospel 17:30</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Gospel 17:30</h1>
+  </header>
+
+  <main>
+    <section class="status">
+      <p id="status">Loading tickets...</p>
+    </section>
+
+    <section class="manual-input">
+      <label for="ticketInput">Enter / scan ticket code:</label>
+      <input
+        type="text"
+        id="ticketInput"
+        autocomplete="off"
+        inputmode="text"
+        placeholder="e.g. ABC123"
+      />
+      <button id="checkButton">Check Ticket</button>
+    </section>
+
+    <section class="result">
+      <h2>Result</h2>
+      <p id="resultMessage"></p>
+    </section>
+
+    <!-- Optional: area for camera scanner later -->
+    <section class="scanner" id="scannerSection" style="display:none;">
+      <h2>Camera Scanner</h2>
+      <div id="qr-reader"></div>
+      <p id="cameraStatus"></p>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
