@@ -155,7 +155,7 @@ function startQrScanner() {
 const now = Date.now();
 
   // Ignore duplicate scans of the same code within 1 second
-  if (decodedText === lastScannedText && now - lastScanTime < 5000) {
+  if (decodedText === lastScannedText && now - lastScanTime < 3000) {
     return;
   }
 
