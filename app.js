@@ -6,8 +6,14 @@ let lastScanTime = 0;
 
 
 const USED_TICKETS_KEY = "usedTickets";
-
 const resetUsedTicketsButtonEl = document.getElementById("resetUsedTicketsButton");
+const scanCountEl = document.getElementById("scanCount");
+
+function updateScanCountDisplay() {
+  if (scanCountEl) {
+    scanCountEl.textContent = usedTickets.size;
+  }
+}
 
 if (resetUsedTicketsButtonEl) {
   resetUsedTicketsButtonEl.addEventListener("click", () => {
@@ -42,6 +48,7 @@ function saveUsedTicketsToStorage() {
 function resetUsedTickets() {
   usedTickets.clear();                       // clear the Set in memory
   localStorage.removeItem(USED_TICKETS_KEY); // remove from localStorage
+  updateScanCountDisplay();
   resultMessageEl.className = "";
   resultMessageEl.textContent = "Used tickets reset on this device.";
 }
@@ -97,15 +104,22 @@ function checkTicket(codeRaw) {
     return;
   }
 
-  if (usedTickets.has(code)) {
-    resultMessageEl.textContent = `Ticket "${code}" was already used.`;
-    resultMessageEl.classList.add("result-used");
-    return;
-  }
+if (usedTickets.has(code)) {
+  resultMessageEl.textContent = `Ticket "${code}" was already used.`;
+  resultMessageEl.classList.add("result-used");
+  return;
+}
 
-  // Mark as used
+// Mark as used
 usedTickets.add(code);
-saveUsedTicketsToStorage();
+
+// If you have this function from before, keep it:
+if (typeof saveUsedTicketsToStorage === "function") {
+  saveUsedTicketsToStorage();
+}
+
+updateScanCountDisplay();
+
 resultMessageEl.textContent = `Ticket "${code}" is VALID. Welcome!`;
 resultMessageEl.classList.add("result-valid");
 }
@@ -164,10 +178,6 @@ const now = Date.now();
 
   ticketInputEl.value = decodedText;
   checkTicket(decodedText);
-
-
-
-
         
         // When a QR code is successfully scanned
         //ticketInputEl.value = decodedText;
@@ -224,5 +234,6 @@ if (startScannerButtonEl) {
 
 // Initialize
 loadUsedTicketsFromStorage();
+updateScanCountDisplay();
 loadTickets();
 
